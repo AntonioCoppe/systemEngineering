@@ -6,19 +6,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
-import reading.FileMissingException;
 
 /**
- * @author Antonio Coppe (ID 17913)
+ * @author Antonio Coppe(ID 17913)
  * 
- *  The overall goal of this class is to retrieve the html file of the songs.
- */
-/**
- * @param url
- * @param fileName
- * @param song
- * @throws IOException
- * @throws FileMissingException
+ *         The overall goal of this class is to retrieve the html file of the
+ *         songs.
  */
 
 public class Download {
@@ -28,6 +21,11 @@ public class Download {
 	 * This method opens the connection to the web with a timeout(5000ms) with the
 	 * use of a User-Agent for preventing a 403 error to occur.
 	 * 
+	 */
+	/**
+	 * @param url
+	 * @return
+	 * @throws IOException
 	 */
 	public static String getDownloadUrl(String url) throws IOException {
 		String count = "";
@@ -44,10 +42,17 @@ public class Download {
 		return count;
 	}
 
+
 	/**
-	 * This method write the html in a file
+	 * This method write the html in the file
 	 */
-	static void writer(String url, String fileName) throws IOException, FileMissingException {
+	/**
+	 * @param url
+	 * @param fileName
+	 * @throws IOException
+	 * 
+	 */
+	static void writer(String url, String fileName) throws IOException {
 		String page = Download.getDownloadUrl(url);
 		PrintWriter writer;
 		writer = new PrintWriter(fileName);
@@ -56,12 +61,18 @@ public class Download {
 	}
 
 	/*
-	 * This method recall the previous two in order to associate the file with its
-	 * own name
+	 * This method recall the previous two in order to give the file the name with
+	 * the song that is associated to
 	 */
-	public static void DownloadAndSave(String url, String song) throws IOException, FileMissingException {
+	/**
+	 * @param url
+	 * @param song
+	 * @throws IOException
+	 * 
+	 */
+	public static void DownloadAndSave(String url, String song) throws IOException {
 		getDownloadUrl(url);
-		String html = "HTMLFiles/" + RemoveTag.getFileName(song) + ".html";
+		String html = "HTMLFiles/" + FileName.getFileName(song) + ".html";
 		writer(url, html);
 	}
 }

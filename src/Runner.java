@@ -5,13 +5,21 @@ import reading.SongsReader;
  *
  */
 public class Runner {
-	public static void main(String[] args) throws Exception {
-		Thread d = new Thread(new Study(SongsReader.readSongsFromCSV()));
+	/**
+	 * @param args
+	 * 
+	 */
+	public static void main(String[] args) {
+		Facade f = new Facade(SongsReader.readSongsFromCSV());
+		Thread d = new Thread(f);
 		d.start();
 		try {
 			d.join();
+
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();
 		}
+
 	}
+
 }
