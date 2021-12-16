@@ -27,7 +27,7 @@ provider "aws" {
 
 
 
-resource "random_pet" "sg" {}
+resource "maven app" "sg" {}
 
 resource "aws_instance" "web" {
   ami                    = "ami-830c94e3"
