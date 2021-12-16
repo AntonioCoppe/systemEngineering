@@ -15,7 +15,7 @@ terraform {
     organization = "systemEngineering"
 
     workspaces {
-      name = "systemEngineering"
+      name = "SystemEngineeringNew"
     }
   }
 }
