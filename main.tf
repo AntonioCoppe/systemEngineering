@@ -27,7 +27,7 @@ provider "aws" {
 
 
 
-resource "maven app" "sg" {}
+resource "random pet" "sg" {}
 
 resource "aws_instance" "web" {
   ami                    = "ami-830c94e3"
@@ -42,7 +42,7 @@ resource "aws_instance" "web" {
 }
 
 resource "aws_security_group" "web-sg" {
-  name = "${maven_app.sg.id}-sg"
+  name = "${random_pet.sg.id}-sg"
   ingress {
     from_port   = 8080
     to_port     = 8080
