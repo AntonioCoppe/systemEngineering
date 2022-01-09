@@ -22,7 +22,7 @@ terraform {
 
 
 provider "aws" {
-  region = "us-west-2"
+  region = "us-north-1"
 }
 
 
