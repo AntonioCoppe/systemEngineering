@@ -12,10 +12,10 @@ terraform {
   required_version = ">= 1.1.1"
 
   cloud {
-    organization = "systemEngineering"
+    organization = "sciorcoppe"
 
     workspaces {
-      name = "SystemEngineeringNew"
+      name = "systemsEngineering"
     }
   }
 }
