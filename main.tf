@@ -9,13 +9,13 @@ terraform {
       version = "3.0.1"
     }
   }
-  required_version = ">= 1.1.0"
+  required_version = ">= 1.1.1"
 
   cloud {
-    organization = "sciorcoppe"
+    organization = "systemEngineering"
 
     workspaces {
-      name = "systemsEngineering"
+      name = "SystemEngineeringNew"
     }
   }
 }
