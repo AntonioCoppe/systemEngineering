@@ -6,11 +6,18 @@ terraform {
     }
   }
 
-  required_version = ">= 0.14.9"
+  required_version = ">= 1.1.1"
+
+  cloud {
+    organization = "systemEngineering"
+
+    workspaces {
+      name = "SystemEngineeringNew"
+    }
+  }
 }
 
 provider "aws" {
-  profile = "default"
   region  = "us-west-2"
 }
 
