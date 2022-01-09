@@ -55,6 +55,7 @@ jobs:
             path: staging
   deploy:
     name: Deploy
+    needs: [build_and_test]
     runs-on: ubuntu-latest
 
     steps:
