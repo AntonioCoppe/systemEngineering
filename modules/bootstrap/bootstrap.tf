@@ -31,8 +31,8 @@ resource "aws_s3_bucket" "state_bucket" {
 }
 
 # Build a DynamoDB to use for terraform state locking
-resource "aws_dynamodb_table" "aws-locks" {
-  name = "aws-locks"
+resource "aws_dynamodb_table" var.dynamo_db_table_name {
+  name = var.dynamo_db_table_name
 
   # Pay per request is cheaper for low-i/o applications, like our TF lock state
   billing_mode = "PAY_PER_REQUEST"
@@ -47,7 +47,7 @@ resource "aws_dynamodb_table" "aws-locks" {
   }
 
   tags = {
-    Name    = "aws-locks"
+    Name    = var.dynamo_db_table_name
     BuiltBy = "Terraform"
   }
 }
