@@ -1,55 +1,55 @@
+# Require TF version to be same as or greater than 0.12.13
 terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "3.26.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "3.0.1"
-    }
-  }
-  required_version = ">= 1.1.1"
-
-  cloud {
-    organization = "sciorcoppe"
-
-    workspaces {
-      name = "systemsEngineering"
-    }
-  }
+  required_version = ">=0.12.13"
+  #backend "s3" {
+  #  bucket         = "kyler-github-actions-demo-terraform-tfstate"
+  #  key            = "terraform.tfstate"
+  #  region         = "us-east-1"
+  #  dynamodb_table = "aws-locks"
+  #  encrypt        = true
+  #}
 }
 
+# Download any stable version in AWS provider of 2.36.0 or higher in 2.36 train
 provider "aws" {
-  region = "us-north-1"
+  region  = "us-east-1"
+  version = "~> 2.36.0"
 }
 
-
-
-resource "random_pet" "sg" {}
-
-resource "aws_instance" "web" {
-  ami                    = "ami-830c94e3"
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.web-sg.id]
-
-  user_data = <<-EOF
-              #!/bin/bash
-              echo "Hello, World" > index.html
-              nohup busybox httpd -f -p 8080 &
-              EOF
+# Call the seed_module to build our ADO seed info
+module "bootstrap" {
+  source                      = "./modules/bootstrap"
+  name_of_s3_bucket           = "kyler-github-actions-demo-terraform-tfstate"
+  dynamo_db_table_name        = "aws-locks"
+  iam_user_name               = "GitHubActionsIamUser"
+  ado_iam_role_name           = "GitHubActionsIamRole"
+  aws_iam_policy_permits_name = "GitHubActionsIamPolicyPermits"
+  aws_iam_policy_assume_name  = "GitHubActionsIamPolicyAssume"
 }
+  
 
-resource "aws_security_group" "web-sg" {
-  name = "${random_pet.sg.id}-sg"
-  ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+# Build the VPC
+resource "aws_vpc" "vpc" {
+  cidr_block           = "10.1.0.0/16"
+  instance_tenancy     = "default"
+  tags = {
+    Name      = "Vpc"
+    Terraform = "true"
   }
 }
-
-output "web-address" {
-  value = "${aws_instance.web.public_dns}:8080"
+# Build route table 1
+resource "aws_route_table" "route_table1" {
+  vpc_id = aws_vpc.vpc.id
+  tags = {
+    Name = "RouteTable1"
+    Terraform = "true"
+  }
+}
+# Build route table 2
+resource "aws_route_table" "route_table2" {
+  vpc_id = aws_vpc.vpc.id
+  tags = {
+    Name = "RouteTable2"
+    Terraform = "true"
+  }
 }
