@@ -12,22 +12,22 @@ terraform {
   required_version = ">= 1.1.1"
 
   cloud {
-    organization = "systemEngineering"
+    organization = "sciorcoppe"
 
     workspaces {
-      name = "SystemEngineeringNew"
+      name = "systemsEngineering"
     }
   }
 }
 
 
 provider "aws" {
-  region = "us-west-2"
+  region = "us-north-1"
 }
 
 
 
-resource "random_pet" "sg" {}
+
 
 resource "aws_instance" "web" {
   ami                    = "ami-830c94e3"
