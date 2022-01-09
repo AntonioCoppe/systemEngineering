@@ -4,7 +4,7 @@ terraform {
   #backend "s3" {
   #  bucket         = "sciorcoppe-github-actions-demo-terraform-tfstate"
   #  key            = "terraform.tfstate"
-  #  region         = "us-north-1"
+  #  region         = "us-east-2"
   #  dynamodb_table = "aws-locks"
   #  encrypt        = true
   #}
@@ -12,7 +12,7 @@ terraform {
 
 # Download any stable version in AWS provider of 2.36.0 or higher in 2.36 train
 provider "aws" {
-  region  = "us-north-1"
+  region  = "us-east-2"
   version = "~> 2.36.0"
 }
 
