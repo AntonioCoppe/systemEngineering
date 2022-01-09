@@ -17,7 +17,7 @@ We have used the following technologies
 ## Our Pipeline solution
 Our pipeline starts on push on branch main. The first job is to build and test the application via Maven. If the job succeeds, a docker image is created and deployed to AWS's Elastic Container Service. 
 
-![This is an image](https://myoctocat.com/assets/images/base-octocat.svg)
+![This is an image](https://github.com/sciortinogiulio0/systemEngineering/blob/main/SyEnProject.drawio.png)
 
 A detailed explanation of the pipeline and its jobs is hereby presented:
 - **build-and-test**: sets up the job creating an Ubuntu environment. Uses action setup-java@v1 to set up JDK11 and checkout@v2 to get repository info. Then runs the command 'mvn -B package --file pom.xml' to finally build the project via Maven. For the Demo version of the pipeline we skipped the testing phase
