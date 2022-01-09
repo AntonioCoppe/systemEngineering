@@ -18,4 +18,6 @@ We have used the following technologies
 Our pipeline starts on push on branch main. The first job is to build and test the application via Maven. If the job succeeds, a docker image is created and deployed to AWS's Elastic Container Service. 
 
 A detailed explanation of the pipeline and its jobs is hereby presented:
-- **build-and-test**: creates a Ubuntu environment
+- **build-and-test**: sets up the job creating an Ubuntu environment. Uses action setup-java@v1 to set up JDK11 and checkout@v2 to get repository info. Then runs the command 'mvn -B package --file pom.xml' to finally build the project via Maven. For the Demo version of the pipeline we skipped the testing phase
+- **publish**: after a successful build of the project, the project is built and an artifact of the jar file is created. The jar file will be empty for the demo.
+- **deploy**: the final job in this workflow is to build a Docker image via a simple bash script. It also configures the AWS credentials contained in the secrets. The Docker image is tagged and pushed in the ECR via a CLI command.
