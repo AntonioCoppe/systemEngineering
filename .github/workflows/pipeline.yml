@@ -1,4 +1,4 @@
-name: Maven CI/CD
+name: Pipeline
 
 on:
   push:
@@ -39,7 +39,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
 
-  publish-job:
+  publish:
       runs-on: ubuntu-latest
       needs: [build_and_test]
       steps:
@@ -55,7 +55,7 @@ jobs:
             path: staging
   deploy:
     name: Deploy
-    needs: [build_and_test]
+    needs: [publish]
     runs-on: ubuntu-latest
 
     steps:
