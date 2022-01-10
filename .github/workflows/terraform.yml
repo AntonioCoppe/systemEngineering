@@ -76,10 +76,4 @@ jobs:
         run: terraform apply -auto-approve
         
       - name: Terraform Destroy
-        uses: dflook/terraform-destroy@v1
-        id: first_try
-        continue-on-error: true
-
-      - name: Retry failed destroy
-        uses: dflook/terraform-destroy@v1
-        if: ${{ steps.first_try.outputs.failure-reason == 'destroy-failed' }}
+        run: terraform destroy -auto-approve
