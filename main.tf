@@ -36,8 +36,12 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
-              echo "Hello, World" > index.html
-              nohup busybox httpd -f -p 8080 &
+              sudo yum update -y
+              sudo amazon-linux-extras install docker
+              sudo service docker start
+              sudo usermod -a -G docker ec2-user
+              docker info
+              sudo docker pull 099178467731.dkr.ecr.us-east-1.amazonaws.com/my-app:4
               EOF
 }
 
