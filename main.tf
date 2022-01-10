@@ -37,6 +37,8 @@ resource "aws_instance" "web" {
   user_data = <<-EOF
               #!/bin/bash
               echo "hello world"
+              sudo terminate-instance
+              echo "terminated haha"
               sudo yum update -y
               sudo amazon-linux-extras install docker
               sudo service docker start
