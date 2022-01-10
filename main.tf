@@ -1,49 +1,56 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
-      Version = "~>3.27"
+      source  = "hashicorp/aws"
+      version = "3.26.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.0.1"
     }
   }
+  required_version = ">= 1.1.0"
 
-  required_version = ">=0.14.9"
-  
-     backend "s3" {
-       bucket = "Remote_State_S3_Bucket_Name"
-       key    = "Remote_State_S3_Bucket_Key"
-       region = "east-us-1"
-   }
+  cloud {
+    organization = "REPLACE_ME"
+
+    workspaces {
+      name = "gh-actions-demo"
+    }
+  }
 }
 
-}
 
 provider "aws" {
-  version = "~>3.0"
-  region  = "us-east-1"
+  region = "us-west-2"
 }
 
-resource "aws_s3_bucket" "s3Bucket" {
-     bucket = "Remote_State_S3_Bucket_Name"
-     acl       = "public-read"
 
-     policy  = <<EOF
-{
-     "id" : "MakePublic",
-   "version" : "2012-10-17",
-   "statement" : [
-      {
-         "action" : [
-             "s3:GetObject"
-          ],
-         "effect" : "Allow",
-         "resource" : "arn:aws:s3:::Remote_State_S3_Bucket_Name/*",
-         "principal" : "*"
-      }
-    ]
+
+resource "random_pet" "sg" {}
+
+resource "aws_instance" "web" {
+  ami                    = "ami-830c94e3"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.web-sg.id]
+
+  user_data = <<-EOF
+              #!/bin/bash
+              echo "Hello, World" > index.html
+              nohup busybox httpd -f -p 8080 &
+              EOF
+}
+
+resource "aws_security_group" "web-sg" {
+  name = "${random_pet.sg.id}-sg"
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-EOF
+}
 
-   website {
-       index_document = "index.html"
-   }
+output "web-address" {
+  value = "${aws_instance.web.public_dns}:8080"
 }
