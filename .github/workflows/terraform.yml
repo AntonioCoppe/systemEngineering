@@ -79,13 +79,7 @@ jobs:
         uses: dflook/terraform-destroy@v1
         id: first_try
         continue-on-error: true
-        with:
-          path: my-terraform-config
-          workspace: ${{ github.head_ref }}
 
       - name: Retry failed destroy
         uses: dflook/terraform-destroy@v1
         if: ${{ steps.first_try.outputs.failure-reason == 'destroy-failed' }}
-        with:
-          path: my-terraform-config
-          workspace: ${{ github.head_ref }}
