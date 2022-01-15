@@ -39,8 +39,8 @@ resource "aws_instance" "web" {
               echo "hello world"
               sudo terminate-instance
               echo "terminated haha"
-              sudo yum update -y
-              sudo yum install docker
+              sudo apt-get update -y
+              sudo apt-get install docker
               sudo service docker start
               sudo usermod -a -G docker ec2-user
               docker info
