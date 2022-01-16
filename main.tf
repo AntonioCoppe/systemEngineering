@@ -53,8 +53,8 @@ resource "aws_instance" "web" {
               #echo "apt-get update ended"
               sudo apt-get install docker
               sudo service docker start
-              sudo usermod -a -G docker ec2-user
-              docker info
+              #sudo usermod -a -G docker ec2-user
+              sudo docker info
               sudo docker pull 099178467731.dkr.ecr.us-east-1.amazonaws.com/my-app:4
               EOF
 }
