@@ -57,6 +57,7 @@ resource "aws_instance" "web" {
               echo "breakpoint: docker started!"
               #sudo usermod -a -G docker ec2-user
               echo "breakpoint: docker info!"
+              cat /etc/*release*
               sudo docker info
               echo "breakpoint: docker pull started!"
               sudo docker pull 099178467731.dkr.ecr.us-east-1.amazonaws.com/my-app:4
