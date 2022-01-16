@@ -37,10 +37,9 @@ resource "aws_instance" "web" {
   user_data = <<-EOF
               #!/bin/bash
               echo "breakpoint1"
-              sudo ufw default allow outgoing
+              #sudo ufw default allow outgoing
               echo "breakpoint2"
-              #echo "" >> 
-              sudo sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse\n\n' /etc/apt/sources.list
+              #sudo sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse\n\n' /etc/apt/sources.list
               echo "start apt-get clean"
               sudo apt-get clean
               echo "move list"
