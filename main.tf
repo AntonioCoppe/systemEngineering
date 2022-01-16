@@ -36,12 +36,13 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
-              echo "hello world"
-              sudo terminate-instance
-              echo "terminated haha"
+              echo "breakpoint1"
               sudo ufw default allow outgoing
-              sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse\n\n' /etc/apt/sources.list
+              echo "breakpoint2"
+              #echo "" >> 
+              #sudo sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse\n\n' /etc/apt/sources.list
               sudo apt-get update
+              echo "breakpoint3"
               sudo apt-get install docker
               sudo service docker start
               sudo usermod -a -G docker ec2-user
