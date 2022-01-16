@@ -60,7 +60,6 @@ resource "aws_security_group" "web-sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
 }
 
 output "web-address" {
