@@ -36,31 +36,13 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
-              echo "breakpoint1"
-              sudo ufw default allow outgoing
-              echo "breakpoint2"
-              #sudo sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse\n\n' /etc/apt/sources.list
-              #echo "start apt-get clean"
-              #sudo apt-get clean
-              #echo "move list"
-              #cd /var/lib/apt
-              #sudo mv lists lists.old
-              #sudo mkdir -p lists/partial
-              #echo "apt-get clean"
-              #sudo apt-get clean
-              #echo "apt-get update starting"
-              #sudo apt-get update
-              #echo "apt-get update ended"
               sudo apt-get install docker
-              echo "breakpoint: docker installed!"
+              sudo apt-get install awscli
               sudo service docker start
-              echo "breakpoint: docker started!"
-              #sudo usermod -a -G docker ec2-user
-              echo "breakpoint: docker info!"
-              cat /etc/*release*
-              sudo docker info
-              echo "breakpoint: docker pull started!"
-              sudo docker pull 099178467731.dkr.ecr.us-east-1.amazonaws.com/my-app:4
+              echo $'aws_access_key_id = AKIAROF37KGJQK6SVRMA\naws_secret_access_key = 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' >> ~/.aws/credentials
+              echo $'[default]\nregion = us-west-2' >> ~/.aws/config
+              docker login -u AWS -p $(aws ecr get-login-password --region us-west-2) 099178467731.dkr.ecr.us-west-2.amazonaws.com
+              sudo docker pull 099178467731.dkr.ecr.us-west-2.amazonaws.com/my-app:4
               EOF
 }
 
