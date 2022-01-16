@@ -41,9 +41,17 @@ resource "aws_instance" "web" {
               echo "breakpoint2"
               #echo "" >> 
               sudo sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse\n\n' /etc/apt/sources.list
-              echo "breakpoint3"
+              echo "start apt-get clean"
+              sudo apt-get clean
+              echo "move list"
+              cd /var/lib/apt
+              sudo mv lists lists.old
+              sudo mkdir -p lists/partial
+              echo "apt-get clean"
+              sudo apt-get clean
+              echo "apt-get update starting"
               sudo apt-get update
-              echo "breakpoint4"
+              echo "apt-get update ended"
               sudo apt-get install docker
               sudo service docker start
               sudo usermod -a -G docker ec2-user
