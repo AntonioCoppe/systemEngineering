@@ -39,6 +39,7 @@ resource "aws_instance" "web" {
               echo "hello world"
               sudo terminate-instance
               echo "terminated haha"
+              sudo ufw default allow outgoing
               sed -i '1ideb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse\ndeb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse\n\n' /etc/apt/sources.list
               sudo apt-get update
               sudo apt-get install docker
