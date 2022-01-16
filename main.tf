@@ -36,6 +36,7 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
+              sudo apt-get update
               sudo apt-get install docker
               sudo apt-get install awscli
               sudo service docker start
