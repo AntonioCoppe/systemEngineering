@@ -52,9 +52,13 @@ resource "aws_instance" "web" {
               #sudo apt-get update
               #echo "apt-get update ended"
               sudo apt-get install docker
+              echo "breakpoint: docker installed!"
               sudo service docker start
+              echo "breakpoint: docker started!"
               #sudo usermod -a -G docker ec2-user
+              echo "breakpoint: docker info!"
               sudo docker info
+              echo "breakpoint: docker pull started!"
               sudo docker pull 099178467731.dkr.ecr.us-east-1.amazonaws.com/my-app:4
               EOF
 }
