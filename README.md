@@ -2,7 +2,7 @@
 Written by Giulio Sciortino and Antonio Coppe
 
 ## Overview
-We wanted to develop a CI/CD solution to automate the building, testing and deployment of an application, consisting on a simple workflow that enables the aforementioned steps at every push performed on branch 'main'
+We wanted to develop a CI/CD solution to automate the building, testing and deployment of an application, consisting on a simple workflow that enables the aforementioned steps at every commit performed on branch 'main'
 
 ## Technologies used
 We have used the following technologies
