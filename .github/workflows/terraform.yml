@@ -74,6 +74,9 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
+        env:
+         TF_VAR_aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         
       #- name: Terraform Destroy
       #  run: terraform destroy -auto-approve
