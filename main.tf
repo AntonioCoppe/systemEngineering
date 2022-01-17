@@ -39,7 +39,7 @@ resource "aws_instance" "web" {
               sudo apt-get install docker -y
               sudo apt-get install awscli -y
               sudo service docker start -y
-              echo $'aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\naws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}' >> ~/.aws/credentials' >> ~/.aws/config
+              echo $'aws_access_key_id = ${var.TF_VAR_aws_access_key_id}\naws_secret_access_key = ${var.TF_VAR_aws_secret_access_key}' >> ~/.aws/credentials' >> ~/.aws/config
               echo $'[default]\nregion = us-west-2' >> ~/.aws/config
               docker login -u AWS -p $(aws ecr get-login-password --region us-west-2) 099178467731.dkr.ecr.us-west-2.amazonaws.com
               sudo docker pull 099178467731.dkr.ecr.us-west-2.amazonaws.com/my-app:4 -y
