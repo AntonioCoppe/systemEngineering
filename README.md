@@ -21,7 +21,7 @@ We have used the following technologies
 - **AWS**: we used aws as a server provider. The final step for our pipeline was indeed to deploy the application on an aws. In particular we have used the following aws services:
   - Elastic Container Registry (ECR): that is a repository where docker images are tagged and stored. Using the aws credentials stored in GitHub secret, it is possible to pull images
   - Elastic Container Services (EC2): we used ECS to create a ec2 Ubuntu 20.04 instance where we install docker, awscli and pull the docker image from the ECR
-- **Terraform**: EC2 instances are fully managed by terraform in main.tf, where we set the specifications for the container and its connection. This technology allowed us to skip manual setting every time a new instance had to be created.
+- **Terraform**: EC2 instances are fully managed by terraform in main.tf, where we set the specifications for the container and its connection.
 - **Terraform Cloud**: terraform cloud is a service used to manage infrastructures and monitor ongoing plans.
 
 ## Our Pipeline solution
@@ -35,3 +35,14 @@ A detailed explanation of the pipeline and its jobs is hereby presented:
 - **Deploy**: the third step in this workflow is to build a Docker image via a simple bash script. It also configures the AWS credentials contained in the GitHub Secrets. The Docker image is tagged and pushed in the ECR via a CLI command.
 - **Terraform**: the final step of the workflow accesses to Terraform Cloud, and creates the infrastructure implemented in main.tf and variable.tf, via the 'Format', 'Init', 'Validate' and 'Apply' jobs. In particular, after the 'Apply' job, a script is executed in the newly created EC2 instance to pull the docker image from the ECR.
 
+## Motivation of Design Decisions
+- *Why ECR and EC2?*
+  - We decided to include both ECR and EC2 to keep track of old versions of the application in the ECR, while deploying the latest version on EC2
+- *Why Terraform?*
+  - Terraform allowed us to skip manual setting every time a new instance had to be created.
+- *Why AWS?*
+  - AWS has many useful features and allowed us to learn more about cloud computing.
+
+## Issues faced and how we solved
+- *Security groups for EC2 instances*:
+  - During the development of the pipeline we needed to connect via browser to the newly created instances CLI in order to verify if the previous steps successfully installed the required programs in the machine. The default settings provided by aws didn't allow to connect via ssh. We had to change manually that setting every time. We solved this by adding in main.tf the needed network configuration of the security group.
