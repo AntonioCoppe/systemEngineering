@@ -45,7 +45,7 @@ resource "aws_instance" "web" {
               export AWS_SECRET_ACCESS_KEY=${var.aws_secret_access_key}
               export AWS_DEFAULT_REGION=us-west-2
               sudo docker login -u AWS -p $(aws ecr get-login-password --region us-west-2) 099178467731.dkr.ecr.us-west-2.amazonaws.com
-              sudo docker pull 099178467731.dkr.ecr.us-west-2.amazonaws.com/systems_engineering:1
+              sudo docker pull 099178467731.dkr.ecr.us-west-2.amazonaws.com/systems_engineering:7
               EOF
 }
 
